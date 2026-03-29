@@ -6,6 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Unity Web Player | PlayableStudyCaseQuiz</title>
   <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
   <link rel="manifest" href="manifest.webmanifest">
 
   <style>
@@ -75,24 +76,24 @@
 
     // ===== UNITY CONFIG =====
     var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/10VerticalFHD_R3.loader.js";
+    var loaderUrl = buildUrl + "/10VerticalFHD_R4.loader.js";
 
     var config = {
       arguments: [],
-      dataUrl: buildUrl + "/10VerticalFHD_R3.data",
-      frameworkUrl: buildUrl + "/10VerticalFHD_R3.framework.js",
-      codeUrl: buildUrl + "/10VerticalFHD_R3.wasm",
+      dataUrl: buildUrl + "/10VerticalFHD_R4.data",
+      frameworkUrl: buildUrl + "/10VerticalFHD_R4.framework.js",
+      codeUrl: buildUrl + "/10VerticalFHD_R4.wasm",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Side Apps",
       productName: "PlayableStudyCaseQuiz",
       productVersion: "1.0_vertical",
       showBanner: unityShowBanner,
 
-      // ВАЖНО: отключаем растягивание
+      // отключаем растягивание Unity
       matchWebGLToCanvasSize: false
     };
 
-    // ===== МОБИЛЬНЫЙ VIEWPORT =====
+    // ===== MOBILE VIEWPORT =====
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       var meta = document.createElement('meta');
       meta.name = 'viewport';
@@ -101,7 +102,10 @@
       document.head.appendChild(meta);
     }
 
-    // ===== ПРИНУДИТЕЛЬНЫЙ 9:16 =====
+    // ===== ПОРТРЕТ + МИНИМАЛЬНЫЙ РАЗМЕР =====
+    const MIN_WIDTH = 720;
+    const MIN_HEIGHT = 1280;
+
     function applyPortraitLayout() {
       document.body.style.display = "flex";
       document.body.style.justifyContent = "center";
@@ -116,6 +120,12 @@
       if (width > vw) {
         width = vw;
         height = vw * (16 / 9);
+      }
+
+      // 👉 применяем минимальные ограничения
+      if (width < MIN_WIDTH) {
+        width = MIN_WIDTH;
+        height = MIN_HEIGHT;
       }
 
       container.style.width = width + "px";
