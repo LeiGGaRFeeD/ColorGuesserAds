@@ -89,7 +89,7 @@
       productVersion: "1.0_vertical",
       showBanner: unityShowBanner,
 
-      // отключаем авто-растягивание Unity
+      // отключаем авто-скейл Unity
       matchWebGLToCanvasSize: false
     };
 
@@ -105,9 +105,9 @@
     // ===== НАСТРОЙКИ =====
     const MIN_WIDTH = 720;
     const MIN_HEIGHT = 1280;
-    const MAX_DPR = 2; // ограничение для производительности
+    const MAX_DPR = 2;
 
-    // ===== ПОРТРЕТ + DPR =====
+    // ===== ГЛАВНАЯ ЛОГИКА (фикс всего) =====
     function applyPortraitLayout() {
       document.body.style.display = "flex";
       document.body.style.justifyContent = "center";
@@ -116,6 +116,7 @@
       const vw = window.innerWidth;
       const vh = window.innerHeight;
 
+      // базовый 9:16
       let width = vh * (9 / 16);
       let height = vh;
 
@@ -124,24 +125,25 @@
         height = vw * (16 / 9);
       }
 
-      // минимум
-      if (width < MIN_WIDTH) {
-        width = MIN_WIDTH;
-        height = MIN_HEIGHT;
-      }
+      // 👉 считаем scale (чтобы вписаться в экран)
+      const scale = Math.min(width / MIN_WIDTH, height / MIN_HEIGHT);
 
-      container.style.width = width + "px";
-      container.style.height = height + "px";
+      const displayWidth = MIN_WIDTH * scale;
+      const displayHeight = MIN_HEIGHT * scale;
+
+      container.style.width = displayWidth + "px";
+      container.style.height = displayHeight + "px";
       container.style.position = "relative";
 
-      // 👉 DPR фикс (убирает пикселизацию)
+      // 👉 DPR (убирает пикселизацию)
       const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
 
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
+      // 👉 всегда рендерим минимум 720x1280
+      canvas.width = Math.floor(MIN_WIDTH * dpr);
+      canvas.height = Math.floor(MIN_HEIGHT * dpr);
 
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
+      canvas.style.width = displayWidth + "px";
+      canvas.style.height = displayHeight + "px";
       canvas.style.display = "block";
     }
 
