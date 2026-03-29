@@ -1,9 +1,9 @@
 const cacheName = "Side Apps-PlayableStudyCaseQuiz-1.0_vertical";
 const contentToCache = [
-    "Build/10VerticalFHD_R2.loader.js",
-    "Build/10VerticalFHD_R2.framework.js.br",
-    "Build/10VerticalFHD_R2.data.br",
-    "Build/10VerticalFHD_R2.wasm.br",
+    "Build/10VerticalFHD_R3.loader.js",
+    "Build/10VerticalFHD_R3.framework.js",
+    "Build/10VerticalFHD_R3.data",
+    "Build/10VerticalFHD_R3.wasm",
     "TemplateData/style.css"
 
 ];
